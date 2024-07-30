@@ -1,6 +1,6 @@
 #include "linear_regression.hpp"
+#include "logging.hpp"
 #include "model_exception.hpp"
-#include "spdlog/spdlog.h"
 #include <cmath>
 #include <iostream>
 
@@ -10,20 +10,27 @@ LinearRegression::LinearRegression(double alpha, int iterations)
   , theta0(0.5)
   , theta1(0.5)
 {
-    spdlog::info(
-      "LinearRegression initialized with alpha = {}, iterations = {}",
-      alpha,
-      iterations);
+    if (alpha <= 0) {
+        MODEL_LOG_ERROR("Invalid alpha value.");
+        throw ModelException("Alpha must be positive.");
+    }
+    if (iterations <= 0) {
+        MODEL_LOG_ERROR("Invalid iterations value.");
+        throw ModelException("Iterations must be positive.");
+    }
+    MODEL_LOG_INFO(
+      "LinearRegression initialized with alpha = " + std::to_string(alpha) +
+      ", iterations = " + std::to_string(iterations));
 }
 
 void
 LinearRegression::fit(const std::vector<std::pair<double, double>>& data)
 {
     int m = data.size();
-    spdlog::info("Starting fit with {} data points.", m);
+    MODEL_LOG_INFO("Starting fit with " + std::to_string(m) + " data points.");
 
     if (m == 0) {
-        spdlog::error("Size of data is 0.");
+        MODEL_LOG_ERROR("Size of data is 0.");
         throw ModelException("Training data is empty.");
     }
 
@@ -41,20 +48,20 @@ LinearRegression::fit(const std::vector<std::pair<double, double>>& data)
         theta1 -= alpha * (1.0 / m) * sum1;
 
         double cost = computeCost(data);
-        spdlog::debug("Iteration {}: Cost = {}, theta0 = {}, theta1 = {}",
-                      iter + 1,
-                      cost,
-                      theta0,
-                      theta1);
+        MODEL_LOG_DEBUG("Iteration " + std::to_string(iter + 1) +
+                        ": Cost = " + std::to_string(cost) +
+                        ", "
+                        "theta0 = " +
+                        std::to_string(theta0) +
+                        ", theta1 = " + std::to_string(theta1));
 
         if (std::isnan(cost) || std::isnan(theta0) || std::isnan(theta1) ||
             std::isinf(cost) || std::isinf(theta0) || std::isinf(theta1)) {
-            spdlog::error("Numerical issues detected. Halting training.");
+            MODEL_LOG_ERROR("Numerical issues detected. Halting training.");
             throw ModelException("Numerical issues detected during training.");
         }
     }
-
-    spdlog::info("Finished fit.");
+    MODEL_LOG_INFO("Finished fit.");
 }
 
 double
