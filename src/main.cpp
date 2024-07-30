@@ -26,6 +26,11 @@ runRegression(const std::string& filename)
     } catch (const LinearRegressionException& e) {
         std::cerr << "\033[31mException: " << e.what() << "\033[0m"
                   << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "\033[31mStandard Exception: " << e.what() << "\033[0m"
+                  << std::endl;
+    } catch (...) {
+        std::cerr << "\033[31mUnknown error occurred.\033[0m" << std::endl;
     }
 }
 
