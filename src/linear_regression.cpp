@@ -1,4 +1,5 @@
 #include "linear_regression.hpp"
+#include "linear_regression_exception.hpp"
 #include <cmath>
 #include <iostream>
 
@@ -14,6 +15,10 @@ void
 LinearRegression::fit(const std::vector<std::pair<double, double>>& data)
 {
     int m = data.size();
+
+    if (m == 0) {
+        throw LinearRegressionException("Training data is empty.");
+    }
 
     for (int iter = 0; iter < iterations; ++iter) {
         double sum0 = 0;
@@ -33,12 +38,10 @@ LinearRegression::fit(const std::vector<std::pair<double, double>>& data)
                   << ", theta0 = " << theta0 << ", theta1 = " << theta1
                   << std::endl;
 
-        // Check for numerical issues
         if (std::isnan(cost) || std::isnan(theta0) || std::isnan(theta1) ||
             std::isinf(cost) || std::isinf(theta0) || std::isinf(theta1)) {
-            std::cerr << "Numerical issues detected. Halting training."
-                      << std::endl;
-            return;
+            throw LinearRegressionException(
+              "Numerical issues detected. Halting training.");
         }
     }
 }

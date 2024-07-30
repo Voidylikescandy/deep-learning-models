@@ -1,4 +1,5 @@
 #include "data_loader.hpp"
+#include "linear_regression_exception.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -9,8 +10,7 @@ DataLoader::loadData(const std::string& filename)
     std::vector<std::pair<double, double>> data;
     std::ifstream file(filename);
     if (!file) {
-        std::cerr << "Error opening file: " << filename << std::endl;
-        return data;
+        throw LinearRegressionException("Error opening file: " + filename);
     }
     std::string line;
 
@@ -18,8 +18,7 @@ DataLoader::loadData(const std::string& filename)
         std::istringstream iss(line);
         double x, y;
         if (!(iss >> x >> y)) {
-            std::cerr << "Error reading line: " << line << std::endl;
-            break;
+            throw LinearRegressionException("Error reading line: " + line);
         }
         data.emplace_back(x, y);
     }

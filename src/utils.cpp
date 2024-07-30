@@ -1,4 +1,5 @@
 #include "utils.hpp"
+#include "linear_regression_exception.hpp"
 #include <algorithm>
 #include <random>
 
@@ -11,10 +12,9 @@ Utils::splitData(const std::vector<std::pair<double, double>>& data,
                  double validation_ratio)
 {
     if (train_ratio + validation_ratio > 1.0) {
-        std::cerr << "Invalid split ratios. Ensure train_ratio + "
-                     "validation_ratio <= 1.0."
-                  << std::endl;
-        return;
+        throw LinearRegressionException(
+          "Invalid split ratios. Ensure train_ratio + validation_ratio <= "
+          "1.0.");
     }
 
     std::vector<std::pair<double, double>> shuffled_data = data;
