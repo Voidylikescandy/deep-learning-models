@@ -1,5 +1,6 @@
 #include "data_loader.hpp"
-#include "linear_regression_exception.hpp"
+#include "model_exception.hpp"
+#include "spdlog/spdlog.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -7,10 +8,12 @@
 std::vector<std::pair<double, double>>
 DataLoader::loadData(const std::string& filename)
 {
+    spdlog::info("Initiating data loading");
     std::vector<std::pair<double, double>> data;
     std::ifstream file(filename);
     if (!file) {
-        throw LinearRegressionException("Error opening file: " + filename);
+        spdlog::error("Invalid file.");
+        throw ModelException("Error opening file: " + filename);
     }
     std::string line;
 
@@ -18,9 +21,13 @@ DataLoader::loadData(const std::string& filename)
         std::istringstream iss(line);
         double x, y;
         if (!(iss >> x >> y)) {
-            throw LinearRegressionException("Error reading line: " + line);
+            spdlog::error("Invalid data line - x : {}, y : {}", x, y);
+            throw ModelException("Error reading line: " + line);
         }
+        spdlog::debug("x : {}, y : {}", x, y);
         data.emplace_back(x, y);
     }
+
+    spdlog::info("Data has been loaded successfully.");
     return data;
 }

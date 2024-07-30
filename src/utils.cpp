@@ -1,5 +1,6 @@
 #include "utils.hpp"
-#include "linear_regression_exception.hpp"
+#include "model_exception.hpp"
+#include "spdlog/spdlog.h"
 #include <algorithm>
 #include <random>
 
@@ -12,10 +13,12 @@ Utils::splitData(const std::vector<std::pair<double, double>>& data,
                  double validation_ratio)
 {
     if (train_ratio + validation_ratio > 1.0) {
-        throw LinearRegressionException(
+        spdlog::error("Invalid ratios.");
+        throw ModelException(
           "Invalid split ratios. Ensure train_ratio + validation_ratio <= "
           "1.0.");
     }
+    spdlog::info("Splitting data into train, validation and tests.");
 
     std::vector<std::pair<double, double>> shuffled_data = data;
     std::random_device rd;
@@ -30,4 +33,6 @@ Utils::splitData(const std::vector<std::pair<double, double>>& data,
                       shuffled_data.begin() + train_size + validation_size);
     test.assign(shuffled_data.begin() + train_size + validation_size,
                 shuffled_data.end());
+
+    spdlog::info("Splitting successful.");
 }

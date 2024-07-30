@@ -1,5 +1,6 @@
 #include "linear_regression.hpp"
-#include "linear_regression_exception.hpp"
+#include "model_exception.hpp"
+#include "spdlog/spdlog.h"
 #include <cmath>
 #include <iostream>
 
@@ -9,15 +10,21 @@ LinearRegression::LinearRegression(double alpha, int iterations)
   , theta0(0.5)
   , theta1(0.5)
 {
+    spdlog::info(
+      "LinearRegression initialized with alpha = {}, iterations = {}",
+      alpha,
+      iterations);
 }
 
 void
 LinearRegression::fit(const std::vector<std::pair<double, double>>& data)
 {
     int m = data.size();
+    spdlog::info("Starting fit with {} data points.", m);
 
     if (m == 0) {
-        throw LinearRegressionException("Training data is empty.");
+        spdlog::error("Size of data is 0.");
+        throw ModelException("Training data is empty.");
     }
 
     for (int iter = 0; iter < iterations; ++iter) {
@@ -34,16 +41,20 @@ LinearRegression::fit(const std::vector<std::pair<double, double>>& data)
         theta1 -= alpha * (1.0 / m) * sum1;
 
         double cost = computeCost(data);
-        std::cout << "Iteration " << iter + 1 << ": Cost = " << cost
-                  << ", theta0 = " << theta0 << ", theta1 = " << theta1
-                  << std::endl;
+        spdlog::debug("Iteration {}: Cost = {}, theta0 = {}, theta1 = {}",
+                      iter + 1,
+                      cost,
+                      theta0,
+                      theta1);
 
         if (std::isnan(cost) || std::isnan(theta0) || std::isnan(theta1) ||
             std::isinf(cost) || std::isinf(theta0) || std::isinf(theta1)) {
-            throw LinearRegressionException(
-              "Numerical issues detected. Halting training.");
+            spdlog::error("Numerical issues detected. Halting training.");
+            throw ModelException("Numerical issues detected during training.");
         }
     }
+
+    spdlog::info("Finished fit.");
 }
 
 double
