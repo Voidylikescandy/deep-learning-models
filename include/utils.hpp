@@ -1,15 +1,14 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
-#include <utility>
-#include <vector>
+#include "constants.hpp"
 
 namespace Utils {
 void
-splitData(const std::vector<std::pair<double, double>>& data,
-          std::vector<std::pair<double, double>>& train,
-          std::vector<std::pair<double, double>>& validation,
-          std::vector<std::pair<double, double>>& test,
+splitData(const SingleFeatureSingleTargetData& data,
+          SingleFeatureSingleTargetData& train,
+          SingleFeatureSingleTargetData& validation,
+          SingleFeatureSingleTargetData& test,
           double train_ratio,
           double validation_ratio);
 }

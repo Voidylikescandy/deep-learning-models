@@ -4,8 +4,8 @@
 
 TEST(DataLoaderTest, LoadDataSuccess)
 {
-    std::vector<std::pair<double, double>> data =
-      DataLoader::loadData("../data/data.txt");
+    SingleFeatureSingleTargetData data =
+      DataLoader::loadData("../data/ulr_data.txt");
     EXPECT_EQ(data.size(), 6); // Assuming data.txt has 6 lines of data
 }
 

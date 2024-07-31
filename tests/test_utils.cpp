@@ -4,11 +4,11 @@
 
 TEST(UtilsTest, SplitData)
 {
-    std::vector<std::pair<double, double>> data = {
-        { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 }, { 5, 5 },
-        { 6, 6 }, { 7, 7 }, { 8, 8 }, { 9, 9 }, { 10, 10 }
-    };
-    std::vector<std::pair<double, double>> train, validation, test;
+    SingleFeatureSingleTargetData data = { { 1, 1 },  { 2, 2 }, { 3, 3 },
+                                           { 4, 4 },  { 5, 5 }, { 6, 6 },
+                                           { 7, 7 },  { 8, 8 }, { 9, 9 },
+                                           { 10, 10 } };
+    SingleFeatureSingleTargetData train, validation, test;
     Utils::splitData(data, train, validation, test, 0.6, 0.2);
 
     EXPECT_EQ(train.size(), 6);
@@ -18,7 +18,7 @@ TEST(UtilsTest, SplitData)
 
 TEST(UtilsTest, InvalidRatio)
 {
-    std::vector<std::pair<double, double>> data, train, validation, test;
+    SingleFeatureSingleTargetData data, train, validation, test;
     EXPECT_THROW(Utils::splitData(data, train, validation, test, 1.0, 1.0),
                  ModelException);
 }

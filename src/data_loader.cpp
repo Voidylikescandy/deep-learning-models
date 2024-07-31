@@ -4,11 +4,11 @@
 #include <fstream>
 #include <sstream>
 
-std::vector<std::pair<double, double>>
+SingleFeatureSingleTargetData
 DataLoader::loadData(const std::string& filename)
 {
     MODEL_LOG_INFO("Initiating data loading.");
-    std::vector<std::pair<double, double>> data;
+    SingleFeatureSingleTargetData data;
     std::ifstream file(filename);
     if (!file) {
         file.close();

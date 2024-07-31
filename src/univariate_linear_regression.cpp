@@ -25,8 +25,7 @@ UnivariateLinearRegression::UnivariateLinearRegression(double alpha,
 }
 
 void
-UnivariateLinearRegression::fit(
-  const std::vector<std::pair<double, double>>& data)
+UnivariateLinearRegression::fit(const SingleFeatureSingleTargetData& data)
 {
     int m = data.size();
     MODEL_LOG_INFO("Starting fit with " + std::to_string(m) + " data points.");
@@ -74,7 +73,7 @@ UnivariateLinearRegression::predict(double x) const
 
 double
 UnivariateLinearRegression::computeCost(
-  const std::vector<std::pair<double, double>>& data) const
+  const SingleFeatureSingleTargetData& data) const
 {
     double totalCost = 0;
     int m = data.size();

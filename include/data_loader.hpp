@@ -1,15 +1,13 @@
 #ifndef DATA_LOADER_HPP
 #define DATA_LOADER_HPP
 
+#include "constants.hpp"
 #include <string>
-#include <utility>
-#include <vector>
 
 class DataLoader
 {
   public:
-    static std::vector<std::pair<double, double>> loadData(
-      const std::string& filename);
+    static SingleFeatureSingleTargetData loadData(const std::string& filename);
 };
 
 #endif // DATA_LOADER_HPP

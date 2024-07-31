@@ -5,10 +5,10 @@
 #include <random>
 
 void
-Utils::splitData(const std::vector<std::pair<double, double>>& data,
-                 std::vector<std::pair<double, double>>& train,
-                 std::vector<std::pair<double, double>>& validation,
-                 std::vector<std::pair<double, double>>& test,
+Utils::splitData(const SingleFeatureSingleTargetData& data,
+                 SingleFeatureSingleTargetData& train,
+                 SingleFeatureSingleTargetData& validation,
+                 SingleFeatureSingleTargetData& test,
                  double train_ratio,
                  double validation_ratio)
 {
@@ -20,7 +20,7 @@ Utils::splitData(const std::vector<std::pair<double, double>>& data,
     }
     MODEL_LOG_INFO("Splitting data into train, validation and tests.");
 
-    std::vector<std::pair<double, double>> shuffled_data = data;
+    SingleFeatureSingleTargetData shuffled_data = data;
     std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle(shuffled_data.begin(), shuffled_data.end(), g);
