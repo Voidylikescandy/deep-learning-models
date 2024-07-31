@@ -1,7 +1,7 @@
 #include "data_loader.hpp"
-#include "linear_regression.hpp"
 #include "logging.hpp"
 #include "model_exception.hpp"
+#include "univariate_linear_regression.hpp"
 #include "utils.hpp"
 #include <iostream>
 
@@ -9,6 +9,7 @@ void
 runUnivariateLinearRegression(const std::string& filename)
 {
     MODEL_LOG_INFO("Initiating Univariate Linear Regression Model.");
+
     try {
         std::vector<std::pair<double, double>> data =
           DataLoader::loadData(filename);
@@ -18,7 +19,7 @@ runUnivariateLinearRegression(const std::string& filename)
             throw ModelException("No data loaded. Please check the data file.");
         }
 
-        LinearRegression model(0.000001, 100);
+        UnivariateLinearRegression model(0.000001, 100);
         model.fit(data);
 
         double x;
@@ -40,6 +41,7 @@ runUnivariateLinearRegression(const std::string& filename)
         MODEL_LOG_ERROR("Unknown Exception.");
         std::cerr << "\033[31mUnknown error occurred.\033[0m" << std::endl;
     }
+
     MODEL_LOG_INFO("Finishing Univariate Linear Regression Model.");
 }
 
@@ -47,7 +49,7 @@ int
 main()
 {
     spdlog::set_level(spdlog::level::debug);
-    MODEL_LOG_INFO("Starting application.");
+    MODEL_LOG_INFO("Application launched.");
 
     const std::string filename = "../data/data.txt";
     runUnivariateLinearRegression(filename);

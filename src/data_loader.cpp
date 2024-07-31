@@ -2,7 +2,6 @@
 #include "logging.hpp"
 #include "model_exception.hpp"
 #include <fstream>
-#include <iostream>
 #include <sstream>
 
 std::vector<std::pair<double, double>>

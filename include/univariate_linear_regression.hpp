@@ -1,13 +1,13 @@
-#ifndef LINEAR_REGRESSION_HPP
-#define LINEAR_REGRESSION_HPP
+#ifndef UNIVARIATE_LINEAR_REGRESSION_HPP
+#define UNIVARIATE_LINEAR_REGRESSION_HPP
 
 #include <utility>
 #include <vector>
 
-class LinearRegression
+class UnivariateLinearRegression
 {
   public:
-    LinearRegression(double alpha, int iterations);
+    UnivariateLinearRegression(double alpha, int iterations);
     void fit(const std::vector<std::pair<double, double>>& data);
     double predict(double x) const;
 
@@ -21,4 +21,4 @@ class LinearRegression
       const std::vector<std::pair<double, double>>& data) const;
 };
 
-#endif // LINEAR_REGRESSION_HPP
+#endif // UNIVARIATE_LINEAR_REGRESSION_HPP

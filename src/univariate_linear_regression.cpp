@@ -1,10 +1,11 @@
-#include "linear_regression.hpp"
+#include "univariate_linear_regression.hpp"
 #include "logging.hpp"
 #include "model_exception.hpp"
 #include <cmath>
 #include <iostream>
 
-LinearRegression::LinearRegression(double alpha, int iterations)
+UnivariateLinearRegression::UnivariateLinearRegression(double alpha,
+                                                       int iterations)
   : alpha(alpha)
   , iterations(iterations)
   , theta0(0.5)
@@ -18,13 +19,14 @@ LinearRegression::LinearRegression(double alpha, int iterations)
         MODEL_LOG_ERROR("Invalid iterations value.");
         throw ModelException("Iterations must be positive.");
     }
-    MODEL_LOG_INFO(
-      "LinearRegression initialized with alpha = " + std::to_string(alpha) +
-      ", iterations = " + std::to_string(iterations));
+    MODEL_LOG_INFO("UnivariateLinearRegression initialized with alpha = " +
+                   std::to_string(alpha) +
+                   ", iterations = " + std::to_string(iterations));
 }
 
 void
-LinearRegression::fit(const std::vector<std::pair<double, double>>& data)
+UnivariateLinearRegression::fit(
+  const std::vector<std::pair<double, double>>& data)
 {
     int m = data.size();
     MODEL_LOG_INFO("Starting fit with " + std::to_string(m) + " data points.");
@@ -65,13 +67,13 @@ LinearRegression::fit(const std::vector<std::pair<double, double>>& data)
 }
 
 double
-LinearRegression::predict(double x) const
+UnivariateLinearRegression::predict(double x) const
 {
     return theta0 + theta1 * x;
 }
 
 double
-LinearRegression::computeCost(
+UnivariateLinearRegression::computeCost(
   const std::vector<std::pair<double, double>>& data) const
 {
     double totalCost = 0;
