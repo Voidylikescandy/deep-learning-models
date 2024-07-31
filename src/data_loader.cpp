@@ -5,7 +5,7 @@
 #include <sstream>
 
 SingleFeatureSingleTargetData
-DataLoader::loadData(const std::string& filename)
+DataLoader::loadSingleFeatureSingleTargetData(const std::string& filename)
 {
     MODEL_LOG_INFO("Initiating data loading.");
     SingleFeatureSingleTargetData data;

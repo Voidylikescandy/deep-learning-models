@@ -5,11 +5,13 @@
 TEST(DataLoaderTest, LoadDataSuccess)
 {
     SingleFeatureSingleTargetData data =
-      DataLoader::loadData("../data/ulr_data.txt");
-    EXPECT_EQ(data.size(), 6); // Assuming data.txt has 6 lines of data
+      DataLoader::loadSingleFeatureSingleTargetData("../data/sfst_data.txt");
+    EXPECT_EQ(data.size(), 6); // Assuming sfst_data.txt has 6 lines of data
 }
 
 TEST(DataLoaderTest, LoadDataFileNotFound)
 {
-    EXPECT_THROW(DataLoader::loadData("non_existent_file.txt"), ModelException);
+    EXPECT_THROW(
+      DataLoader::loadSingleFeatureSingleTargetData("non_existent_file.txt"),
+      ModelException);
 }

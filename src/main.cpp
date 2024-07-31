@@ -11,7 +11,8 @@ runUnivariateLinearRegression(const std::string& filename)
     MODEL_LOG_INFO("Initiating Univariate Linear Regression Model.");
 
     try {
-        SingleFeatureSingleTargetData data = DataLoader::loadData(filename);
+        SingleFeatureSingleTargetData data =
+          DataLoader::loadSingleFeatureSingleTargetData(filename);
 
         if (data.empty()) {
             MODEL_LOG_ERROR("Empty data.");
@@ -50,7 +51,7 @@ main()
     spdlog::set_level(spdlog::level::off);
     MODEL_LOG_INFO("Application launched.");
 
-    const std::string filename = "../data/ulr_data.txt";
+    const std::string filename = "../data/sfst_data.txt";
     runUnivariateLinearRegression(filename);
 
     MODEL_LOG_INFO("Application terminated.");
