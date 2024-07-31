@@ -51,7 +51,7 @@ main()
     spdlog::set_level(spdlog::level::debug);
     MODEL_LOG_INFO("Application launched.");
 
-    const std::string filename = "../data/data.txt";
+    const std::string filename = "../data/ulr_data.txt";
     runUnivariateLinearRegression(filename);
 
     MODEL_LOG_INFO("Application terminated.");
