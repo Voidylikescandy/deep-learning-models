@@ -28,6 +28,7 @@ add_executable(DeepLearningModels
     src/data_loader.cpp
     src/univariate_linear_regression.cpp
     src/utils.cpp
+    src/multiple_linear_regression.cpp
 )
 
 # Link spdlog
@@ -38,13 +39,17 @@ add_executable(TestDataLoader tests/test_data_loader.cpp src/data_loader.cpp)
 target_link_libraries(TestDataLoader PRIVATE gtest gtest_main spdlog::spdlog)
 target_include_directories(TestDataLoader PUBLIC include)
 
-add_executable(TestLinearRegression tests/test_univariate_linear_regression.cpp src/univariate_linear_regression.cpp src/utils.cpp)
+add_executable(TestLinearRegression tests/test_univariate_linear_regression.cpp src/univariate_linear_regression.cpp)
 target_link_libraries(TestLinearRegression PRIVATE gtest gtest_main spdlog::spdlog)
 target_include_directories(TestLinearRegression PUBLIC include)
 
 add_executable(TestUtils tests/test_utils.cpp src/utils.cpp)
 target_link_libraries(TestUtils PRIVATE gtest gtest_main spdlog::spdlog)
 target_include_directories(TestUtils PUBLIC include)
+
+add_executable(TestMultipleLinearRegression tests/test_multiple_linear_regression.cpp src/multiple_linear_regression.cpp)
+target_link_libraries(TestMultipleLinearRegression PRIVATE gtest gtest_main spdlog::spdlog)
+target_include_directories(TestMultipleLinearRegression PUBLIC include)
 
 # Enable testing
 enable_testing()
@@ -53,3 +58,4 @@ enable_testing()
 add_test(NAME TestDataLoader COMMAND TestDataLoader)
 add_test(NAME TestLinearRegression COMMAND TestLinearRegression)
 add_test(NAME TestUtils COMMAND TestUtils)
+add_test(NAME TestMultipleLinearRegression COMMAND TestMultipleLinearRegression)

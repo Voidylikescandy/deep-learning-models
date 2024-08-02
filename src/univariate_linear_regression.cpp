@@ -2,15 +2,15 @@
 #include "logging.hpp"
 #include "model_exception.hpp"
 #include <cmath>
-#include <iostream>
 
 UnivariateLinearRegression::UnivariateLinearRegression(double alpha,
                                                        int iterations)
   : alpha(alpha)
   , iterations(iterations)
-  , theta0(0.5)
-  , theta1(0.5)
 {
+    theta0 = 0.5;
+    theta1 = 0.5;
+
     if (alpha <= 0) {
         MODEL_LOG_ERROR("Invalid alpha value.");
         throw ModelException("Alpha must be positive.");
@@ -40,7 +40,7 @@ UnivariateLinearRegression::fit(const SingleFeatureSingleTargetData& data)
         double sum1 = 0;
 
         for (const auto& [x, y] : data) {
-            double h = theta0 + theta1 * x;
+            double h = predict(x);
             sum0 += (h - y);
             sum1 += (h - y) * x;
         }
@@ -78,7 +78,7 @@ UnivariateLinearRegression::computeCost(
     double totalCost = 0;
     int m = data.size();
     for (const auto& [x, y] : data) {
-        double h = theta0 + theta1 * x;
+        double h = predict(x);
         totalCost += std::pow(h - y, 2);
     }
     return totalCost / (2 * m);
