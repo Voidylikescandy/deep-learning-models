@@ -6,11 +6,11 @@
 
 class DataLoader
 {
-  public:
-    static SingleFeatureSingleTargetData loadSingleFeatureSingleTargetData(
-      const std::string& filename);
-    static MultiFeatureSingleTargetData loadMultiFeatureSingleTargetData(
-      const std::string& filename);
+public:
+  static SingleFeatureSingleTargetData loadSingleFeatureSingleTargetData(
+    const std::string& filename);
+  static MultiFeatureSingleTargetData loadMultiFeatureSingleTargetData(
+    const std::string& filename);
 };
 
 #endif // DATA_LOADER_HPP

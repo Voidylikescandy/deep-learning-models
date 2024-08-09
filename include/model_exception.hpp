@@ -6,19 +6,19 @@
 
 class ModelException : public std::exception
 {
-  public:
-    explicit ModelException(const std::string& message)
-      : message_(message)
-    {
-    }
+public:
+  explicit ModelException(const std::string& message)
+    : message_(message)
+  {
+  }
 
-    virtual const char* what() const noexcept override
-    {
-        return message_.c_str();
-    }
+  virtual const char* what() const noexcept override
+  {
+    return message_.c_str();
+  }
 
-  private:
-    std::string message_;
+private:
+  std::string message_;
 };
 
 #endif // MODEL_EXCEPTION_HPP
