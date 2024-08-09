@@ -1,9 +1,10 @@
-#include "data_loader.hpp"
-#include "logging.hpp"
-#include "model_exception.hpp"
-#include "multiple_linear_regression.hpp"
-#include "univariate_linear_regression.hpp"
-#include "utils.hpp"
+#include "backend/include/data_loader.hpp"
+#include "backend/include/logging.hpp"
+#include "backend/include/model_exception.hpp"
+#include "backend/include/multiple_linear_regression.hpp"
+#include "backend/include/univariate_linear_regression.hpp"
+#include "backend/include/utils.hpp"
+#include "ui/include/menu.hpp"
 #include <iostream>
 
 void
@@ -94,8 +95,41 @@ main()
   spdlog::set_level(spdlog::level::debug);
   MODEL_LOG_INFO("Application launched.");
 
-  const std::string filename = "../data/mfst_data.txt";
-  runMultipleLinearRegression(filename);
+  // Relative to backend folder
+
+  sf::RenderWindow window(sf::VideoMode(800, 600), "Linear Regression Menu");
+
+  Menu menu(window.getSize().x, window.getSize().y);
+
+  while (window.isOpen()) {
+    sf::Event event;
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed) {
+        window.close();
+      } else if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Up) {
+          menu.moveUp();
+        } else if (event.key.code == sf::Keyboard::Down) {
+          menu.moveDown();
+        } else if (event.key.code == sf::Keyboard::Return) {
+          int selectedItem = menu.getPressedItem();
+          if (selectedItem == 0) {
+            const std::string filename = "../data/sfst_data.txt";
+            runUnivariateLinearRegression(filename);
+          } else if (selectedItem == 1) {
+            const std::string filename = "../data/mfst_data.txt";
+            runMultipleLinearRegression(filename);
+          } else if (selectedItem == 2) {
+            window.close();
+          }
+        }
+      }
+    }
+
+    window.clear();
+    menu.draw(window);
+    window.display();
+  }
 
   MODEL_LOG_INFO("Application terminated.");
   return 0;
